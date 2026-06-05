@@ -1,18 +1,22 @@
-import mongoose from 'mongoose'
-import { Config } from '../config/config.js'
+
+
+import mongoose from "mongoose";
 
 
 
-async function connecttodb(){
+async function ConnectoDb() {
 
+     try {
+        mongoose.connect("mongodb+srv://ravi:o0jmClCNgNrG0gUm@cluster0.wdljydx.mongodb.net/Started")
 
-    try {
-        await mongoose.connect(Config.MONGO_URI)
         console.log("Mongodb connected")
-    } catch (error) {
-        console.log("error in connecting mongodb",error)
+    }
+    catch (error) {
+        console.log("error in connecting mongodb", error)
     }
     
 }
 
-export default connecttodb
+export {
+    ConnectoDb
+}

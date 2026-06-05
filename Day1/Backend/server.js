@@ -3,11 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config()
 import app from "./src/app.js";
 import { Config } from './src/config/config.js';
-import connecttodb from './src/config/db.js';
+import { ConnectoDb } from './src/config/db.js';
 
 
-connecttodb()
 
+ConnectoDb()
 const port  =  Config.PORT || 5000
 
 
