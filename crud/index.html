@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet">
+    <title>CRUD App - Note Manager</title>
+</head>
+
+<body class="bg-zinc-950 text-white min-h-screen">
+
+    <div class="max-w-sm mx-auto px-6 py-10 flex flex-col gap-6">
+
+        <h1 class="text-2xl font-bold tracking-tight text-center">Note Manager</h1>
+
+        <!-- Form -->
+        <form id="form" class="flex gap-3.5 flex-col">
+            <div
+                class="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 focus-within:border-red-500 transition-colors">
+                <i class="ri-bookmark-line text-zinc-500 text-lg"></i>
+                <input id="inpt1" type="text" placeholder="Note title…"
+                    class="bg-transparent flex-1 text-sm text-white placeholder-zinc-600 outline-none">
+            </div>
+
+            <div
+                class="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3 focus-within:border-red-500 transition-colors">
+                <i class="ri-file-text-line text-zinc-500 text-lg"></i>
+                <input id="inpt2" type="text" placeholder="Add a description…"
+                    class="bg-transparent flex-1 text-sm text-white placeholder-zinc-600 outline-none">
+            </div>
+
+            <button type="submit"
+                class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-400 active:scale-95 transition-all text-white text-sm font-semibold px-5 py-3 rounded-xl w-full">
+                <i class="ri-add-line text-base"></i>
+                Create Note
+            </button>
+        </form>
+
+        <!-- Notes List -->
+
+
+        <!-- <section class="flex flex-col gap-3">
+            <div class="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3">
+                <div class="flex flex-col gap-0.5 flex-1 min-w-0">
+                    <span class="text-xs text-zinc-600">#<span id="Id">Id</span></span>
+                    <h4 id="name" class="text-sm font-semibold text-white truncate">name</h4>
+                    <p id="description" class="text-xs text-zinc-400">description</p>
+                </div>
+            </div>
+        </section> -->
+
+
+
+
+        </section>
+
+    </div>
+
+</body>
+<script>
+
+    let Id = document.querySelector("#Id")
+    let name = document.querySelector("#name")
+    let descriptionn = document.querySelector("#description")
+    let content = document.querySelector("#content")
+
+
+
+    const section = document.createElement("section");
+    section.className = "flex flex-col gap-3";
+
+
+
+
+
+
+
+
+
+
+    console.log(section)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    async function getallnotes() {
+        const allnotes = await fetch("http://localhost:3000/api/getallnotes")
+
+        const response = await allnotes.json()
+
+        console.log(response.notes)
+
+
+        let data = response.notes
+
+        for (let i = 0; i < data.length; i++) {
+            // console.log(data[i])
+    const card = document.createElement("div");
+    const contentt = document.createElement("div");
+    const outerSpan = document.createElement("span");
+    const idSpan = document.createElement("span");
+        const title = document.createElement("h4");
+
+    const description = document.createElement("p");
+
+    // Tailwind classes
+
+    card.className =
+        "flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3";
+
+    contentt.className =
+        "flex flex-col gap-0.5 flex-1 min-w-0";
+
+    outerSpan.className =
+        "text-xs text-zinc-600";
+
+    title.className =
+        "text-sm font-semibold text-white truncate";
+
+    description.className =
+        "text-xs text-zinc-400";
+
+    // Build structure
+    outerSpan.append(idSpan);
+
+    contentt.append(outerSpan);
+    contentt.append(title);
+    contentt.append(description);
+
+    card.append(contentt);
+
+    section.append(card);
+
+    // Add to page
+    document.body.append(section);
+
+
+
+   
+    outerSpan.textContent = "#";
+    idSpan.textContent = response.notes[i]._id;
+    title.textContent = response.notes[i].name;
+    description.textContent = response.notes[i].description;
+
+
+
+
+
+
+
+        }
+
+        Id.textContent = response.notes[2]._id
+        name.textContent = response.notes[2].name
+        description.textContent = response.notes[2].description
+
+    }
+
+    getallnotes()
+
+
+
+    let a;
+    let b;
+
+    let form = document.querySelector("#form")
+
+    let inpt1 = document.querySelector("#inpt1")
+    let inpt2 = document.querySelector("#inpt2")
+
+
+    inpt1.addEventListener("input", function (e) {
+
+        a = e.target.value
+    })
+
+
+    inpt2.addEventListener("input", function (e) {
+        b = e.target.value
+    })
+
+
+    form.addEventListener("submit", async function (e) {
+
+
+        e.preventDefault();
+
+
+        console.log(typeof a)
+        console.log(typeof b)
+
+
+        console.log("form submitted.....")
+
+
+        const data = {
+            name: a,
+            description: b
+        }
+
+
+
+
+
+
+        const res = await fetch("http://localhost:3000/api/createnote", {
+            method: "Post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+
+        })
+
+
+        console.log(res)
+
+
+
+
+
+
+
+
+
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>
